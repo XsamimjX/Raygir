@@ -1,0 +1,5 @@
+foundry v1.7.1 sha256:cf7e688ed0c4c48adffca788b496076e31060b67ac5afe1e43dbb5499c20c88b
+openzeppelin-contracts v5.6.1 commit:5fd1781b1454fd1ef8e722282f86f9293cacf256
+forge-std v1.16.2 commit:bf647bd6046f2f7da30d0c2bf435e5c76a780c1b
+solc 0.8.30
+

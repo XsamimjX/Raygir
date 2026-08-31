@@ -1,0 +1,277 @@
+openapi: 3.1.0
+info:
+  title: Raygir Eligibility Protocol
+  version: 1.0.0
+  description: >-
+    Research API for blinded eligibility issuance. Identity authentication is
+    confined to the issuer; wallet addresses, polls, nullifiers, and choices
+    are not accepted by these endpoints.
+servers:
+  - url: https://issuer.example.test
+    description: Fictional eligibility authority
+  - url: https://raygir.example.test
+    description: Raygir blinded-credential co-signer
+paths:
+  /.well-known/raygir-issuer:
+    get:
+      operationId: issuerMetadata
+      responses:
+        '200':
+          description: Issuer discovery metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuerMetadata'
+  /api/v1/eligibility/challenges:
+    post:
+      operationId: createEligibilityChallenge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [policy, person_reference]
+              properties:
+                policy:
+                  $ref: '#/components/schemas/PolicyName'
+                person_reference:
+                  type: string
+                  maxLength: 255
+                  description: Issuer-local fictional identity reference; never sent to Raygir.
+      responses:
+        '201':
+          description: Short-lived challenge
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [challenge_id, challenge, expires_at]
+                properties:
+                  challenge_id:
+                    type: string
+                    format: uuid
+                  challenge:
+                    $ref: '#/components/schemas/Base64Url'
+                  expires_at:
+                    type: string
+                    format: date-time
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/v1/credentials/blind-issue:
+    post:
+      operationId: issueBlindedCredential
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [challenge_id, challenge, policy, blinded_commitment]
+              properties:
+                challenge_id:
+                  type: string
+                  format: uuid
+                challenge:
+                  $ref: '#/components/schemas/Base64Url'
+                policy:
+                  $ref: '#/components/schemas/PolicyName'
+                blinded_commitment:
+                  $ref: '#/components/schemas/Commitment'
+      responses:
+        '201':
+          description: Issuer-signed blinded commitment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuerCredential'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/v1/credentials/co-sign:
+    post:
+      operationId: cosignBlindedCredential
+      description: Served by Raygir, not by the eligibility authority.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [issuer_did, policy, epoch, blinded_commitment, issuer_signature]
+              properties:
+                issuer_did:
+                  type: string
+                  maxLength: 255
+                policy:
+                  $ref: '#/components/schemas/PolicyName'
+                epoch:
+                  type: integer
+                  minimum: 0
+                blinded_commitment:
+                  $ref: '#/components/schemas/Commitment'
+                issuer_signature:
+                  $ref: '#/components/schemas/Base64Url'
+      responses:
+        '201':
+          description: Raygir co-signature over the same blinded commitment
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [credential_id, raygir_signature]
+                properties:
+                  credential_id:
+                    type: string
+                    format: uuid
+                  raygir_signature:
+                    $ref: '#/components/schemas/Base64Url'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/v1/eligibility-policies/{policy}:
+    get:
+      operationId: eligibilityPolicy
+      parameters:
+        - $ref: '#/components/parameters/Policy'
+      responses:
+        '200':
+          description: Public eligibility policy
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [policy, version, credit_limit, credential_type, issuer_did]
+                properties:
+                  policy:
+                    $ref: '#/components/schemas/PolicyName'
+                  version:
+                    type: integer
+                    minimum: 1
+                  credit_limit:
+                    type: integer
+                    minimum: 1
+                  credential_type:
+                    const: blinded-commitment
+                  issuer_did:
+                    type: string
+  /api/v1/issuer-roots/{policy}/{epoch}:
+    get:
+      operationId: issuerRoot
+      parameters:
+        - $ref: '#/components/parameters/Policy'
+        - $ref: '#/components/parameters/Epoch'
+      responses:
+        '200':
+          description: Append-only issued-credential root snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootSnapshot'
+  /api/v1/revocation-roots/{policy}/{epoch}:
+    get:
+      operationId: revocationRoot
+      parameters:
+        - $ref: '#/components/parameters/Policy'
+        - $ref: '#/components/parameters/Epoch'
+      responses:
+        '200':
+          description: Append-only revoked-credential root snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootSnapshot'
+components:
+  parameters:
+    Policy:
+      name: policy
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/PolicyName'
+    Epoch:
+      name: epoch
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+  schemas:
+    PolicyName:
+      type: string
+      maxLength: 100
+      pattern: '^[a-z0-9._-]+$'
+    Commitment:
+      type: string
+      pattern: '^[a-fA-F0-9]{64}$'
+    Base64Url:
+      type: string
+      pattern: '^[A-Za-z0-9_-]+$'
+    IssuerMetadata:
+      type: object
+      required: [version, did, blind_issue_endpoint, challenge_endpoint]
+      properties:
+        version:
+          const: '1'
+        did:
+          type: string
+        blind_issue_endpoint:
+          type: string
+          format: uri
+        challenge_endpoint:
+          type: string
+          format: uri
+    IssuerCredential:
+      type: object
+      required: [credential_id, policy, epoch, issuer_did, issuer_signature]
+      properties:
+        credential_id:
+          type: string
+          format: uuid
+        policy:
+          $ref: '#/components/schemas/PolicyName'
+        epoch:
+          type: integer
+          minimum: 0
+        issuer_did:
+          type: string
+        issuer_signature:
+          $ref: '#/components/schemas/Base64Url'
+    RootSnapshot:
+      type: object
+      required: [snapshot_id, policy, epoch, algorithm, root, count]
+      properties:
+        snapshot_id:
+          type: string
+          format: uuid
+        policy:
+          $ref: '#/components/schemas/PolicyName'
+        epoch:
+          type: integer
+          minimum: 0
+        algorithm:
+          const: sha3-384
+        root:
+          type: string
+          pattern: '^[a-f0-9]{96}$'
+        count:
+          type: integer
+          minimum: 0
+  responses:
+    ValidationError:
+      description: Invalid or expired request
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [message]
+            properties:
+              message:
+                type: string
+              errors:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string

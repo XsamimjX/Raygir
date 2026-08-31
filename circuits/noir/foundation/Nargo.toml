@@ -1,0 +1,6 @@
+[package]
+name = "sepehr_foundation"
+type = "bin"
+authors = ["Sepehr contributors"]
+
+[dependencies]

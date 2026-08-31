@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-30",
+  "purpose": "Local Phase 3 Noir and Barretenberg compatibility evidence",
+  "toolchain": {
+    "noir": "1.0.0-beta.26",
+    "noirCompilerCommit": "40d6574f851d926f93e0c3a271bac3e6e82ac905",
+    "barretenberg": "5.0.0",
+    "barretenbergArchiveSha256": "4b42a64a0587e1e15089f7a20c87fa2d8a092acb4fc95465a798a73b98ba794d",
+    "verifierTarget": "evm",
+    "proofSystem": "ultra_honk"
+  },
+  "inputs": {
+    "Nargo.toml": "ca09fc8206585c7137697268c952ea4891ce01cca4b66ce38f749d5f9e8aa8f6",
+    "src/main.nr": "28e597e41f6351b6c4e9a296dd28f31d32847027b690972e7f5382cc21754811"
+  },
+  "generatedEvidence": {
+    "circuitSha256": "45302ddad4e5b5c5a45b4ba6b7d36ddeb73c69953716d1c18f069fb8df950747",
+    "witnessSha256": "a6c270f71307ca4b941a6a61496cef23c2062bfafd3e24778f1d2f35004b1716",
+    "proofSha256": "cd24e59b87730e74c4163d23dbf0ed093b0441a2347e7defc9021115edac2ef5",
+    "publicInputsSha256": "51c17454c5c685916d7ae51d7c0b54031dd544891ec7835a3e67b44dd5b68344",
+    "verificationKeySha256": "96aebad88c47e720ee5a134ccfdd4a4e5e82cff628aacefa5fd08ee1e9962758",
+    "verificationKeyHashSha256": "f1cecdc1f93d0099abda0b2ac2177979e5073ae2ec99d7cb4370a9d90ad82c5f",
+    "solidityVerifierSha256": "558047e1282360ee54600bf6206274fccf0d1e748a48c611995b9c16399809e4"
+  },
+  "limitations": [
+    "The official bb-versions.json did not yet publish a Barretenberg mapping for Noir 1.0.0-beta.26 when this evidence was generated.",
+    "This compatibility run supplements the locked Circom/Groth16 work; it does not replace the remaining Phase 3 circuits or an audited production proving setup.",
+    "Zero-knowledge proof bytes may vary between runs; circuit and verification-key reproducibility must be checked independently."
+  ]
+}

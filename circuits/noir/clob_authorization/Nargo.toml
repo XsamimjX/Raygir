@@ -1,0 +1,6 @@
+[package]
+name = "clob_authorization"
+type = "bin"
+authors = ["Sepehr contributors"]
+
+[dependencies]

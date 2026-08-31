@@ -1,0 +1,5 @@
+circom 2.2.3 sha256:e43f132ee6f0aa79b705beceb59c2a7e6a54d7bdeab917ca34e9fc1951d185e1
+circomlib 2.0.5
+circom_tester 0.0.24
+snarkjs 0.7.6
+package-lock.json sha256:79e3a5e7ce9442feb32c7d567c8c61abf30c2e4f51477fd09884cce6d00f4333

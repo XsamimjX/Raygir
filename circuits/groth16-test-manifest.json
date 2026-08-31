@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-30",
+  "purpose": "Local Phase 3 Groth16 dual-credential proof and forged-public-input rejection evidence",
+  "productionSafe": false,
+  "toolchain": {
+    "circom": "2.2.3",
+    "snarkjs": "0.7.6",
+    "curve": "bn128",
+    "circuit": "eligibility",
+    "constraints": 18129,
+    "publicInputs": 9,
+    "privateInputs": 8,
+    "publicOutputs": 2
+  },
+  "artifacts": {
+    "ptauBlake2b512": "5e378e69f237abd8e55ffb083df1b0f05e22d0c678712e6ae7f7c3716468546af8489f10505a9155b13837f7184e8b381fdac3375cb003d1e4ebfae32b3f46dc",
+    "r1csSha256": "d68d3cf8c95086e2a3859f37db19080e4629bc878576874c8a857ba58422d902",
+    "provingKeySha256": "335bc164ffa3303188d42c58864effc9831c7fa0c048eadf73df4e6ce4ad2299",
+    "verificationKeySha256": "7909d433b220b427049ea72b74ab9d71ba4f12d1f1326bd754e76bc29dbc8488",
+    "proofSha256": "ed23b0f135ea6b1a562db6f08fd40d98a26a0ad91e69978f01578ba175f72be7",
+    "publicInputsSha256": "965f24503bb7217337269701a90bd8f24f6e51f9a92322f43f75a7142a45ec03",
+    "solidityVerifierSha256": "7eb84aee93aa6684c7c7c6fe1642bfaa6991da06c85b44d067a3fc61cad86245"
+  },
+  "checks": {
+    "validProofVerified": true,
+    "tamperedPublicInputRejected": true,
+    "authorityAndRaygirSignaturesVerifiedInCircuit": true,
+    "solidityVerifierCompiledWith": "0.8.30"
+  },
+  "limitations": [
+    "The official prepared Powers-of-Tau download was unavailable from the test location because of a geographic access restriction.",
+    "The local Powers-of-Tau and circuit beacon values are public and deterministic test material, so these keys must never secure deployed value.",
+    "A production ceremony requires independently verified contributions, artifact publication, reproducibility checks, and an external circuit audit."
+  ]
+}

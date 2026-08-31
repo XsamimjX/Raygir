@@ -1,0 +1,39 @@
+{
+  "schema": "raygir.noir-proof-manifest.v1",
+  "circuit": "clob_authorization",
+  "backend": "ultra_honk",
+  "target": "evm",
+  "toolchain": {
+    "nargo": "1.0.0-beta.26",
+    "noircCommit": "40d657",
+    "barretenberg": "5.0.0",
+    "solidity": "0.8.30"
+  },
+  "publicInputs": [
+    "previous_root",
+    "sequence",
+    "public_fee",
+    "settlement_time",
+    "match_count",
+    "batch_digest",
+    "next_root"
+  ],
+  "sha256": {
+    "src/main.nr": "2cb973120506e724ecda4d31d13bbd4ff2bde44853ec9f6b21945aee36f27e5a",
+    "Nargo.toml": "b33f857fd85f244ef9e1876c4f4edf0d8267dc0999844fa1a8f603adaee79db6",
+    "Prover.toml": "5e5252c164c186ac594b2017da438b824c700672c022dea259fd0f84ffa37c1a",
+    "target/clob_authorization.json": "ce246b1a9f5ebb7d808e37b9ab9fcf34659aded34f21694e4e8362456bc1e518",
+    "target/vk": "1318c69a03f5b0f51bd9ad11d236c7582d33913fd2de7a1c7d316ec6241c1385",
+    "target/proof": "aa363971cb5bee8ae179fd9a9c52ccd6a88ea2b960dbd1203f24028b9907644e",
+    "contracts/src/generated/ClobAuthorizationVerifier.sol": "5393d272a183af658869fbf2d516264a793e399b7dd2d315ded74fee88ffc7ef",
+    "contracts/test/fixtures/ClobAuthorization.proof": "aa363971cb5bee8ae179fd9a9c52ccd6a88ea2b960dbd1203f24028b9907644e"
+  },
+  "notes": [
+    "The committed proof fixture contains test-only keys and values.",
+    "No proving secret or trusted-setup ceremony secret is committed.",
+    "The circuit authorizes one or two non-repeating matched order pairs per proof and pads inactive ABI slots with zero values.",
+    "Each active match proves owner-bound balance-leaf membership and sequential replacement for buyer quote, seller outcome, buyer outcome, and seller quote balances.",
+    "The depth-sixteen balance tree supports 65,536 owner-asset balance leaves in the research testnet circuit.",
+    "Private CLOB orders sign the circuit-native Poseidon2 digest with secp256k1; this authorization is not post-quantum."
+  ]
+}

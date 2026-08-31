@@ -1,0 +1,16 @@
+{
+    "name": "@sepehr/circuits",
+    "private": true,
+    "version": "0.1.0",
+    "license": "AGPL-3.0-only",
+    "scripts": {
+        "test": "node --test test/*.test.mjs"
+    },
+    "dependencies": {
+        "circomlib": "2.0.5"
+    },
+    "devDependencies": {
+        "circom_tester": "0.0.24",
+        "snarkjs": "0.7.6"
+    }
+}

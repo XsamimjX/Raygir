@@ -1,0 +1,12 @@
+asset_id = 0
+blinding = 0
+chain_id = 0
+credit_counter = 0
+holder_secret = 0
+output_value = 0
+owner_secret = 0
+policy_version = 0
+poll_id = 0
+public_fee = 0
+value = 0
+verifier_contract = 0
