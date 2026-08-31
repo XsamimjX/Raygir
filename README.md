@@ -2,6 +2,8 @@
 
 [English](#english) · [فارسی](#فارسی)
 
+Repository: <https://github.com/XsamimjX/Raygir>
+
 ## English
 
 Raygir is a bilingual Persian/English research application for privacy-preserving civic polls and prediction markets on Sepehr Chain. It uses Laravel 13, Inertia 3, React 19, PostgreSQL, Solidity contracts, and zero-knowledge circuits.
@@ -99,6 +101,8 @@ Use TLS, Nginx, PHP-FPM, PostgreSQL, supervised queue workers, the Laravel sched
 ## فارسی
 
 رای‌گیر یک برنامه پژوهشی دوزبانه برای رأی‌گیری مدنی حریم‌خصوصی‌محور و بازارهای پیش‌بینی روی زنجیره سپهر است. فناوری‌های اصلی آن Laravel 13،‏ Inertia 3،‏ React 19،‏ PostgreSQL، قراردادهای Solidity و مدارهای اثبات دانش صفر هستند.
+
+مخزن رسمی: <https://github.com/XsamimjX/Raygir>
 
 این مخزن شامل برنامه اصلی رای‌گیر، قراردادهای `contracts/`، مدارهای `circuits/`، مرجع احراز صلاحیت نمایشی `issuer-demo/` و طرح‌واره‌های `packages/protocol/` است. زنجیره سپهر و سپهربین دو مخزن مستقل هستند.
 

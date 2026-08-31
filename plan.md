@@ -30,6 +30,10 @@
 
 > On 2026-08-31, the user required Sepehr execution and consensus nodes to discover and connect over ordinary public P2P networking rather than a WireGuard dependency. Phase 10 therefore uses signed bootnode records plus discovery/static fallback peers, public P2P ports, and loopback-only Engine/validator administration. A canonical persistent Sepehr Testnet configuration must behave like the future main network while all assets remain explicitly valueless; an offline-generated faucet account is pre-funded by public address at genesis, and its private key must never enter Git. A constrained 2-vCPU/4-GB/30-GB profile may be tested but is not accepted for archive/RPC service or production readiness without measured soak evidence.
 
+> On 2026-08-31, community deployment was required to use one guarded entry script with separate `create`, `join`, `doctor`, `start`, `stop`, and `status` operations. Network creation must produce a checksummed public bundle without validator or faucet secrets. Joining must consume an existing immutable bundle, never regenerate genesis, and install only the selected full-node or validator role. The three repository READMEs must provide bilingual step-by-step community instructions. A comprehensive Persian RTL university report is generated under a Git-ignored local output directory and is not part of any source repository.
+
+> On 2026-08-31, the persistent testnet faucet allocation changed from one 1,000,000,000-SEP account to four independent node-operated faucet accounts. The canonical genesis pre-funds each public faucet address with 1,000,000 valueless test SEP, and the default grant is 200 SEP per accepted wallet request. Faucet operators do not mint independently; all supply is defined once in the shared genesis, and private keys remain host-specific secrets outside Git and the public bundle.
+
 ## Phase status
 
 | Phase | Name | Status | Depends on |
@@ -870,6 +874,7 @@ Tasks:
 - [ ] Generate one canonical immutable Sepehr Testnet EL/CL genesis bundle with a unique network identity, checksums, explicit valueless-asset disclosure, and no committed secret keys.
 - [ ] Pre-fund an offline-generated faucet public address in genesis and provide a rate-limited funding path for test SEP; faucet funds have no redemption or monetary claim.
 - [ ] Measure the constrained 2-vCPU/4-GB/30-GB profile separately; reject it for archive/public RPC and upgrade it if memory, disk, finality, or pruning gates fail.
+- [x] Provide and test a guarded one-script community workflow for network bundle creation, dependency diagnosis, joining, service installation, lifecycle commands, and checksum verification. The 2026-08-31 local acceptance run covered dependency diagnosis, four-faucet genesis rendering, public bundle creation, outer and per-file SHA-256 verification, full-node preparation, local JWT generation, unsafe input rejection, duplicate faucet rejection, and tampered bundle rejection. Real systemd launch and live peer discovery remain Phase 10 production tests.
 - [ ] Keep Engine and validator APIs loopback-only.
 - [ ] Keep the PoW phase isolated from public RPC.
 - [ ] Open public access only after the Merge, continuity tests, and private soak.
